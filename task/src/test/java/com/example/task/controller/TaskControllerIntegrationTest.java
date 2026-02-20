@@ -1,6 +1,7 @@
 package com.example.task.controller;
 
 import com.example.task.model.Task;
+import com.example.task.dto.TaskCreateRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,9 +21,11 @@ class TaskControllerIntegrationTest {
 
     @Test
     void createAndGetAll_shouldReturnCreatedAndList() {
-        Task req = new Task(null, "IT", "Interview task");
+    TaskCreateRequest req = new TaskCreateRequest();
+    req.setTitle("IT");
+    req.setDescription("Interview task");
 
-        ResponseEntity<Task> res = restTemplate.postForEntity("/tasks", req, Task.class);
+    ResponseEntity<Task> res = restTemplate.postForEntity("/tasks", req, Task.class);
 
         assertEquals(HttpStatus.CREATED, res.getStatusCode());
         assertNotNull(res.getBody());

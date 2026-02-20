@@ -4,38 +4,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity<Object> handleNotFound(TaskNotFoundException ex) {
-
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<Object> handleApiException(ApiException ex, HttpServletRequest req) {
         ErrorResponse response = new ErrorResponse(
-            ErrorCode.TASK_NOT_FOUND.name(),
+            ex.getErrorCode().name(),
             ex.getMessage()
         );
+        response.setPath(req.getRequestURI());
+        Object rid = req.getAttribute("requestId");
+        if (rid != null) response.setRequestId(rid.toString());
 
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleGeneric(Exception ex) {
-
-        ErrorResponse response = new ErrorResponse(
-            ErrorCode.INTERNAL_SERVER_ERROR.name(),
-            "Unexpected error occurred"
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, ex.getStatus());
     }
 
     @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidation(
-        org.springframework.web.bind.MethodArgumentNotValidException ex) {
+        org.springframework.web.bind.MethodArgumentNotValidException ex, HttpServletRequest req) {
         
         String message = ex.getBindingResult()
                        .getFieldError()
@@ -44,8 +33,25 @@ public class GlobalExceptionHandler {
         ErrorResponse response = new ErrorResponse(
             ErrorCode.VALIDATION_ERROR.name(),
             message
-    );
+        );
+        response.setPath(req.getRequestURI());
+        Object rid = req.getAttribute("requestId");
+        if (rid != null) response.setRequestId(rid.toString());
 
-    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-}
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGeneric(Exception ex, HttpServletRequest req) {
+
+        ErrorResponse response = new ErrorResponse(
+            ErrorCode.INTERNAL_SERVER_ERROR.name(),
+            "Unexpected error occurred"
+        );
+        response.setPath(req.getRequestURI());
+        Object rid = req.getAttribute("requestId");
+        if (rid != null) response.setRequestId(rid.toString());
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

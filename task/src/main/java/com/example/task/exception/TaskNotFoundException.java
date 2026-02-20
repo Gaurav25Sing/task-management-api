@@ -1,7 +1,9 @@
 package com.example.task.exception;
 
-public class TaskNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class TaskNotFoundException extends ApiException {
     public TaskNotFoundException(Long id) {
-        super("Task not found with id " + id);
+        super(ErrorCode.TASK_NOT_FOUND, HttpStatus.NOT_FOUND, "Task not found with id " + id);
     }
 }

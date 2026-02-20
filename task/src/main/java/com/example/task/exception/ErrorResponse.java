@@ -7,6 +7,8 @@ public class ErrorResponse {
     private LocalDateTime timestamp;
     private String errorCode;
     private String message;
+    private String path;
+    private String requestId;
 
     public ErrorResponse(String errorCode, String message) {
         this.timestamp = LocalDateTime.now();
@@ -25,4 +27,10 @@ public class ErrorResponse {
     public String getMessage() {
         return message;
     }
+
+    public String getPath() { return path; }
+    public String getRequestId() { return requestId; }
+
+    public void setPath(String path) { this.path = path; }
+    public void setRequestId(String requestId) { this.requestId = requestId; }
 }
