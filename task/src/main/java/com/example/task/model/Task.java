@@ -1,6 +1,7 @@
 package com.example.task.model;
 
 import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
 
 public class Task {
 
