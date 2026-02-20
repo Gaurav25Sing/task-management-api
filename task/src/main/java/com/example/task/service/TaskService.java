@@ -4,6 +4,7 @@ import com.example.task.model.Status;
 import com.example.task.model.Task;
 import com.example.task.repository.TaskRepository;
 import org.springframework.stereotype.Service;
+import com.example.task.exception.TaskNotFoundException;
 
 import java.util.List;
 
@@ -28,7 +29,6 @@ public class TaskService {
     public Task updateStatus(Long id, Status status) {
         Task task = repository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
-
         task.updateStatus(status);
         return repository.save(task);
     }
