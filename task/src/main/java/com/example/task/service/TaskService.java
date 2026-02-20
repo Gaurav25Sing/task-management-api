@@ -27,7 +27,7 @@ public class TaskService {
 
     public Task updateStatus(Long id, Status status) {
         Task task = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id " + id));
+                .orElseThrow(() -> new TaskNotFoundException(id));
 
         task.updateStatus(status);
         return repository.save(task);
