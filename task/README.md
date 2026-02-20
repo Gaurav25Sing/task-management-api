@@ -139,12 +139,12 @@ Use Postman to test endpoints.
 - Error Code Standardization – Define consistent error codes for predictable client-side error handling (Implemented this)
 - Add logging & Monitoring - Structured logging and Spring Actuator metrics for health checks. (Implemented using AOP & Actuators)
 - Add unit tests - Add JUnit and Mockito unit tests along with @SpringBootTest integration tests for API validation.
+- Add DTO layer - To decouple API contracts from domain models and avoid over-exposing internal fields.
 
 ---
 
 ## Future Improvements
 
-- Add DTO layer - To decouple API contracts from domain models and avoid over-exposing internal fields.
 - Persistence layer - Replace in-memory storage with database (Spring Data JPA)
 - API Versioning – Introduce versioned endpoints (e.g., /api/v1/tasks) to maintain backward compatibility.
 - Add pagination - Add pagination and sorting to efficiently handle large task datasets.
@@ -152,3 +152,36 @@ Use Postman to test endpoints.
 - Authentication & Authorization – Secure APIs using Spring Security with JWT or OAuth2-based role access control. 
   - Will change flow to Client → Security Filter → Authentication Manager → Controller → Service. 
   - Not implementing now as testing becomes hard every API requires authorization bearer token.
+
+
+---
+
+## Commands helpful to run in mac
+
+- ./mvnw clean install - clean and builds the application
+- ./mvnw spring-boot:run - runs the spring boot application
+-  CREATE TASK 
+curl -X POST http://localhost:8080/tasks \
+-H "Content-Type: application/json" \
+-d '{"title":"Interview Task","description":"Testing validation"}'
+
+- VALIDATION TEST
+curl -X POST http://localhost:8080/tasks \
+-H "Content-Type: application/json" \
+-d '{"title":"","description":"Invalid"}'
+
+- GET ALL
+curl http://localhost:8080/tasks
+
+- UPDATE STATUS
+curl -X PUT "http://localhost:8080/tasks/1?status=COMPLETED"
+
+- UPDATE INVALID ID
+curl -X PUT "http://localhost:8080/tasks/99?status=COMPLETED"
+
+- DELETE
+curl -X DELETE http://localhost:8080/tasks/1
+
+
+
+
