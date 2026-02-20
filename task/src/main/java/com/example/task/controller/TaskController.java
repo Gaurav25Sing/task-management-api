@@ -30,7 +30,7 @@ public class TaskController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") 
     public ResponseEntity<Task> updateStatus(@PathVariable Long id,
                                              @RequestParam Status status) {
         return ResponseEntity.ok(service.updateStatus(id, status));

@@ -1,13 +1,15 @@
 # Task Management API
 
-Simple RESTful Task Management API built with Spring Boot.
+A simple RESTful Task Management API built using Spring Boot.
+
+---
 
 ## Tech Stack
 
 - Java 17
 - Spring Boot 3
 - Maven
-- In-memory storage (ConcurrentHashMap)
+- In-memory storage using ConcurrentHashMap
 
 ---
 
@@ -17,30 +19,125 @@ Simple RESTful Task Management API built with Spring Boot.
 - List All Tasks
 - Update Task Status
 - Delete Task
+- Proper HTTP status codes
 - Global Exception Handling
-- Validation Support
+- Request Validation
 - Layered Architecture (Controller → Service → Repository)
 
 ---
 
-## Architecture
+## Architecture Design
 
 Controller → Handles HTTP requests  
 Service → Business logic  
 Repository → In-memory storage  
 Exception → Global error handling  
 
-Storage is implemented using `ConcurrentHashMap` and `AtomicLong` for thread-safe ID generation.
+Storage uses:
+- ConcurrentHashMap (thread-safe)
+- AtomicLong (safe ID generation)
 
 ---
 
 ## API Endpoints
 
-### 1 Create Task
+### 1. Create Task
+
 POST `/tasks`
 
-```json
+Request Body:
+
 {
   "title": "Interview Task",
   "description": "Test task"
 }
+
+Response:
+- 201 Created
+- Returns created task
+
+---
+
+### 2. Get All Tasks
+
+GET `/tasks`
+
+Response:
+- 200 OK
+- Returns list of tasks
+
+---
+
+### 3. Update Task Status
+
+PUT `/tasks/{id}?status=COMPLETED`
+
+Response:
+- 200 OK
+- Returns updated task
+
+Available Status values:
+- PENDING
+- IN_PROGRESS
+- COMPLETED
+
+---
+
+### 4. Delete Task
+
+DELETE `/tasks/{id}`
+
+Response:
+- 204 No Content
+
+---
+
+## Error Handling
+
+### 404 - Task Not Found
+
+{
+  "timestamp": "2026-02-20T10:00:00",
+  "error": "NOT_FOUND",
+  "message": "Task not found with id 99"
+}
+
+### 400 - Validation Error
+
+{
+  "timestamp": "2026-02-20T10:00:00",
+  "error": "VALIDATION_ERROR",
+  "message": "Title is required"
+}
+
+### 500 - Internal Server Error
+
+{
+  "timestamp": "2026-02-20T10:00:00",
+  "error": "INTERNAL_SERVER_ERROR",
+  "message": "Unexpected error occurred"
+}
+
+---
+
+## Running the Application
+
+Run:
+
+./mvnw spring-boot:run
+
+Application runs on:
+
+http://localhost:8080
+
+Use Postman to test endpoints.
+
+---
+
+## Future Improvements
+
+- Add DTO layer
+- Add pagination
+- Add unit tests
+- Replace in-memory storage with database (Spring Data JPA)
+- Add logging
