@@ -6,6 +6,7 @@ import com.example.task.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task request) {
+    public ResponseEntity<Task> create(@Valid @RequestBody Task request) {
         Task created = service.create(request.getTitle(), request.getDescription());
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }

@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 public class Task {
 
     private Long id;
+    @NotBlank(message = "Title is required")
     private String title;
+    @NotBlank(message = "Description is required")
     private String description;
     private Status status;
     private LocalDateTime createdAt;

@@ -32,4 +32,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class) public ResponseEntity<Object> handleValidation(
+        org.springframework.web.bind.MethodArgumentNotValidException ex) {
+
+    Map<String, Object> body = new HashMap<>();
+    body.put("timestamp", LocalDateTime.now());
+    body.put("error", "VALIDATION_ERROR");
+    body.put("message", ex.getBindingResult()
+                          .getFieldError()
+                          .getDefaultMessage());
+
+    return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+}
 }
