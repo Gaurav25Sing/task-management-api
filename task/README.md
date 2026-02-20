@@ -145,8 +145,10 @@ Use Postman to test endpoints.
 ## Future Improvements
 
 - Add DTO layer - To decouple API contracts from domain models and avoid over-exposing internal fields.
-- Add pagination - Add pagination and sorting to efficiently handle large task datasets.
 - Persistence layer - Replace in-memory storage with database (Spring Data JPA)
 - API Versioning – Introduce versioned endpoints (e.g., /api/v1/tasks) to maintain backward compatibility.
-- Error Code Standardization – Define consistent error codes for predictable client-side error handling (Implemented this)
-- Authentication & Authorization – Secure APIs using Spring Security with JWT or OAuth2-based role access control.
+- Add pagination - Add pagination and sorting to efficiently handle large task datasets.
+  - Not required for small datasets
+- Authentication & Authorization – Secure APIs using Spring Security with JWT or OAuth2-based role access control. 
+  - Will change flow to Client → Security Filter → Authentication Manager → Controller → Service. 
+  - Not implementing now as testing becomes hard every API requires authorization bearer token.
