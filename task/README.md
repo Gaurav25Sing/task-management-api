@@ -142,5 +142,5 @@ Use Postman to test endpoints.
 - Persistence layer - Replace in-memory storage with database (Spring Data JPA)
 - Add logging & Monitoring - Implement structured logging and Spring Actuator metrics for observability and health checks.
 - API Versioning – Introduce versioned endpoints (e.g., /api/v1/tasks) to maintain backward compatibility.
-- Error Code Standardization – Define consistent error codes for predictable client-side error handling
+- Error Code Standardization – Define consistent error codes for predictable client-side error handling (Implemented this)
 - Authentication & Authorization – Secure APIs using Spring Security with JWT or OAuth2-based role access control.
