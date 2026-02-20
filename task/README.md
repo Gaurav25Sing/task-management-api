@@ -138,6 +138,7 @@ Use Postman to test endpoints.
 
 - Error Code Standardization – Define consistent error codes for predictable client-side error handling (Implemented this)
 - Add logging & Monitoring - Structured logging and Spring Actuator metrics for health checks. (Implemented using AOP & Actuators)
+- Add unit tests - Add JUnit and Mockito unit tests along with @SpringBootTest integration tests for API validation.
 
 ---
 
@@ -145,7 +146,6 @@ Use Postman to test endpoints.
 
 - Add DTO layer - To decouple API contracts from domain models and avoid over-exposing internal fields.
 - Add pagination - Add pagination and sorting to efficiently handle large task datasets.
-- Add unit tests - Add JUnit and Mockito unit tests along with @SpringBootTest integration tests for API validation.
 - Persistence layer - Replace in-memory storage with database (Spring Data JPA)
 - API Versioning – Introduce versioned endpoints (e.g., /api/v1/tasks) to maintain backward compatibility.
 - Error Code Standardization – Define consistent error codes for predictable client-side error handling (Implemented this)
